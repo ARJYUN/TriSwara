@@ -23,7 +23,7 @@ Whether you are practicing a simple *Geetham* or recording a complex *Krithi*, t
 ## ✨ Features
 
 ### 👁️ AI Vision Swara Extraction
-Upload any printed, scanned, or handwritten Carnatic sheet music. Our carefully engineered system prompt interfaces with **Google Gemini (Free Tier)** or **Anthropic Claude**, parsing exact rows of notation and ignoring external lyrical or structural text.
+Upload any printed, scanned, or handwritten Carnatic sheet music. Our carefully engineered system prompt interfaces with **Google Gemini (Free Tier)**, parsing exact rows of notation and ignoring external lyrical or structural text.
 
 ### 📐 Deterministic Harmonic Mapping
 TriSwara leverages a mathematically strict 7th-interval mapping algorithm across a 21-position scale (from `.R` base octave up to `N.` top octave). For every normal note it extracts, it instantly generates mathematically perfect `Base` and `Top` harmonic accompaniment frames according to pure Carnatic rules.
@@ -76,12 +76,12 @@ Make sure you have [Node.js](https://nodejs.org/) installed along with `npm`.
 | **Frontend Framework** | **React 18** | High-performance reactive UI rendering. |
 | **Styling & Theme** | **Tailwind CSS** | Custom highly-aesthetic dark mode and gold/glassmorphism geometry. |
 | **Audio Routing** | **Web Audio API** | Advanced buffer manipulation, offset management, and hardware DSP bypasses. |
-| **AI Vision Layer** | **Gemini / Claude** | Multi-provider fallback configuration via a high-security proxy bypass setup. |
+| **AI Vision Layer** | **Gemini Vision** | Serverless integration via a high-security proxy bypass setup. |
 
 ---
 
 ## 🔒 Security Architecture
-**No keys are stored.** When providing your Google Gemini or Anthropic Claude API keys to the system, they are kept exclusively inside Volatile Browser Memory (React State). Keys are completely erased the moment the session closes or the window is refreshed. To bypass strict browser CORS parameters, the application routes the encrypted REST payload through an internal Vite proxy node.
+**No keys are stored.** When providing your Google Gemini API key to the system, it is kept exclusively inside Volatile Browser Memory (React State). Keys are completely erased the moment the session closes or the window is refreshed. To bypass strict browser CORS parameters, the application routes the encrypted REST payload through an internal Vite proxy node.
 
 ---
 

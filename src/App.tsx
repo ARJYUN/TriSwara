@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import TabNav, { TabId } from './components/shared/TabNav';
 import Toast, { ToastMessage, createToast } from './components/shared/Toast';
-import ApiKeyModal, { ApiProvider } from './components/shared/ApiKeyModal';
+import ApiKeyModal from './components/shared/ApiKeyModal';
 import ImageUploader from './components/ConverterWindow/ImageUploader';
 import SwaraColumn from './components/ConverterWindow/SwaraColumn';
 import ConvertButton from './components/ConverterWindow/ConvertButton';
@@ -20,10 +20,7 @@ const defaultTrack = (): TrackState => ({
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 const App: React.FC = () => {
-  const [provider, setProvider] = useState<ApiProvider>('google');
-  const [claudeKey, setClaudeKey] = useState<string>('');
-  const [geminiKey, setGeminiKey] = useState<string>('');
-  
+  const [apiKey, setApiKey] = useState<string>('');
   const [showKeyModal, setShowKeyModal] = useState(true);
   const [activeTab, setActiveTab] = useState<TabId>('converter');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -58,10 +55,8 @@ const App: React.FC = () => {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
-  const handleSaveApiKey = (prov: ApiProvider, key: string) => {
-    setProvider(prov);
-    if (prov === 'anthropic') setClaudeKey(key);
-    else setGeminiKey(key);
+  const handleSaveApiKey = (key: string) => {
+    setApiKey(key);
     setShowKeyModal(false);
   };
 
@@ -103,7 +98,7 @@ const App: React.FC = () => {
     addToast('Sheet downloaded as .txt!', 'success');
   }, [harmonicResult, addToast]);
 
-  const currentApiKey = provider === 'anthropic' ? claudeKey : geminiKey;
+  const currentApiKey = apiKey;
   const allTracks = { base: trackBase, normal: trackNormal, top: trackTop };
   const totalRows = harmonicResult?.base.length ?? 0;
   const totalTokens = harmonicResult?.base.reduce((s, r) => s + r.length, 0) ?? 0;
@@ -113,7 +108,6 @@ const App: React.FC = () => {
       {showKeyModal && (
         <ApiKeyModal 
           onSave={handleSaveApiKey} 
-          initialProvider={provider}
           initialKey={currentApiKey}
         />
       )}
@@ -156,7 +150,7 @@ const App: React.FC = () => {
               className="btn-outline flex items-center gap-2 px-3 py-2 text-xs rounded-lg"
               style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
             >
-              {provider === 'anthropic' ? 'Anthropic 🔒' : 'Gemini ✦'} Key
+              Gemini ✦ Key
             </button>
           </div>
         </header>
@@ -169,7 +163,7 @@ const App: React.FC = () => {
                   Swara Sheet Converter
                 </h2>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Upload an image of your Carnatic geetha or krithi. {provider === 'anthropic' ? 'Claude' : 'Gemini'} AI will extract the swaras and auto-generate 
+                  Upload an image of your Carnatic geetha or krithi. Gemini AI will extract the swaras and auto-generate 
                   the harmonics.
                 </p>
               </div>
@@ -206,7 +200,6 @@ const App: React.FC = () => {
                       base64Image={imageData?.base64 ?? null}
                       mimeType={imageData?.mimeType ?? null}
                       apiKey={currentApiKey}
-                      provider={provider}
                       onResult={handleConvertResult}
                       onError={handleConvertError}
                     />

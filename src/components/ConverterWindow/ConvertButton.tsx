@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { extractSwarasFromImage } from '../../lib/claudeVision';
 import { extractSwarasWithGemini } from '../../lib/geminiVision';
 import { mapToHarmonics, HarmonicResult } from '../../lib/swaraMapper';
-import { ApiProvider } from '../shared/ApiKeyModal';
 
 interface ConvertButtonProps {
   base64Image: string | null;
   mimeType: string | null;
   apiKey: string;
-  provider: ApiProvider;
   onResult: (result: HarmonicResult) => void;
   onError: (msg: string) => void;
 }
@@ -17,7 +14,6 @@ const ConvertButton: React.FC<ConvertButtonProps> = ({
   base64Image,
   mimeType,
   apiKey,
-  provider,
   onResult,
   onError,
 }) => {
@@ -30,18 +26,16 @@ const ConvertButton: React.FC<ConvertButtonProps> = ({
       return;
     }
     if (!apiKey.trim()) {
-      onError(`Please enter your ${provider === 'anthropic' ? 'Anthropic' : 'Gemini'} API key.`);
+      onError('Please enter your Gemini API key.');
       return;
     }
 
     setLoading(true);
-    setProgress(provider === 'anthropic' ? 'Sending to Claude...' : 'Sending to Gemini...');
+    setProgress('Sending to Gemini...');
 
     try {
       setProgress('AI is reading the swaras...');
-      const rows = provider === 'anthropic' 
-        ? await extractSwarasFromImage(base64Image, mimeType, apiKey)
-        : await extractSwarasWithGemini(base64Image, mimeType, apiKey);
+      const rows = await extractSwarasWithGemini(base64Image, mimeType, apiKey);
 
       setProgress('Applying harmonic mapping...');
       const result = mapToHarmonics(rows);
