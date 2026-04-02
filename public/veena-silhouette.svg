@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="none">
+  <!-- Resonating body of the veena -->
+  <ellipse cx="50" cy="90" rx="28" ry="18" fill="#c9a84c" opacity="0.5"/>
+  <ellipse cx="50" cy="90" rx="22" ry="14" fill="#c9a84c" opacity="0.3"/>
+  <!-- Neck -->
+  <path d="M50 90 Q47 60 43 30 Q40 12 44 6 Q50 0 56 6 Q60 12 57 30 Q53 60 50 90Z" fill="#c9a84c" opacity="0.6"/>
+  <!-- Head / tuning pegs -->
+  <circle cx="50" cy="6" r="5" fill="#c9a84c" opacity="0.8"/>
+  <!-- Tuning pegs -->
+  <circle cx="40" cy="10" r="2.5" fill="#c9a84c" opacity="0.7"/>
+  <circle cx="60" cy="10" r="2.5" fill="#c9a84c" opacity="0.7"/>
+  <circle cx="36" cy="18" r="2" fill="#c9a84c" opacity="0.6"/>
+  <circle cx="64" cy="18" r="2" fill="#c9a84c" opacity="0.6"/>
+  <!-- Bridge -->
+  <path d="M44 36 Q36 33 34 38 Q32 43 38 43" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M56 32 Q64 29 66 34 Q68 39 62 39" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.7"/>
+  <!-- Strings -->
+  <line x1="42" y1="20" x2="44" y2="85" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+  <line x1="45" y1="18" x2="47" y2="85" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+  <line x1="50" y1="17" x2="50" y2="85" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+  <line x1="55" y1="18" x2="53" y2="85" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+  <line x1="58" y1="20" x2="56" y2="85" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+  <!-- Sound hole -->
+  <circle cx="50" cy="90" r="5" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>

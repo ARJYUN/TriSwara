@@ -1,0 +1,441 @@
+/* ─── Google Fonts (must be first) ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─────────────────────────────────── */
+:root {
+  --bg-deep: #0f0f14;
+  --bg-card: #16161f;
+  --bg-elevated: #1e1e2e;
+  --bg-hover: #252535;
+
+  --gold: #c9a84c;
+  --gold-light: #e0c070;
+  --gold-glow: rgba(201, 168, 76, 0.25);
+
+  --indigo: #4338ca;
+  --indigo-light: #6366f1;
+  --indigo-bg: rgba(67, 56, 202, 0.15);
+
+  --emerald: #059669;
+  --emerald-light: #10b981;
+  --emerald-bg: rgba(5, 150, 105, 0.15);
+
+  --amber: #d97706;
+  --amber-light: #f59e0b;
+  --amber-bg: rgba(217, 119, 6, 0.15);
+
+  --text-primary: #e8e4dc;
+  --text-secondary: #9d9aad;
+  --text-muted: #5a576e;
+
+  --border: rgba(201, 168, 76, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-card); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ─── Swara Chip Dot Notation ────────────────────────────────── */
+/* Base octave (.X) — dot below via ::before */
+.swara-chip[data-octave="base"]::before {
+  content: '•';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* Top octave (X.) — dot above via ::after */
+.swara-chip[data-octave="top"]::after {
+  content: '•';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.9;
+}
+
+.swara-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  margin: 3px;
+  cursor: default;
+  letter-spacing: 0.05em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.swara-chip:hover {
+  transform: translateY(-1px);
+}
+
+.swara-chip.base {
+  background: var(--indigo-bg);
+  color: var(--indigo-light);
+  border: 1px solid rgba(67, 56, 202, 0.3);
+}
+
+.swara-chip.normal {
+  background: var(--emerald-bg);
+  color: var(--emerald-light);
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+.swara-chip.top {
+  background: var(--amber-bg);
+  color: var(--amber-light);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+.swara-chip.out-of-range {
+  background: rgba(90, 87, 110, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(90, 87, 110, 0.2);
+  font-style: italic;
+}
+
+.swara-chip.unknown {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+/* ─── Shimmer Animation ──────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-elevated) 25%,
+    rgba(201, 168, 76, 0.1) 50%,
+    var(--bg-elevated) 75%,
+    var(--bg-card) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ─── Tab Transitions ────────────────────────────────────────── */
+@keyframes tabFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-content {
+  animation: tabFadeSlide 0.3s ease;
+}
+
+/* ─── Veena Loading ──────────────────────────────────────────── */
+@keyframes veenaPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.veena-loading {
+  animation: veenaPulse 2s ease-in-out infinite;
+}
+
+/* ─── Glow Effects ───────────────────────────────────────────── */
+.gold-glow {
+  box-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(201, 168, 76, 0.1);
+}
+
+.gold-text-glow {
+  text-shadow: 0 0 20px var(--gold-glow);
+}
+
+/* ─── Waveform Canvas ────────────────────────────────────────── */
+.waveform-canvas {
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Custom Range Slider ────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-elevated);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0 0 0 var(--gold-glow);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+
+input[type="range"].trim-start::-webkit-slider-thumb {
+  background: var(--indigo-light);
+}
+
+input[type="range"].trim-end::-webkit-slider-thumb {
+  background: var(--amber-light);
+}
+
+/* ─── Tooltip ────────────────────────────────────────────────── */
+.tooltip-wrapper {
+  position: relative;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-4px);
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  margin-bottom: 4px;
+}
+
+/* ─── Glass Card ─────────────────────────────────────────────── */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+
+.glass-card-elevated {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ─── Button Styles ──────────────────────────────────────────── */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark, #a07830));
+  color: #0f0f14;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+}
+
+.btn-gold:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 4px 20px var(--gold-glow);
+  transform: translateY(-1px);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-record {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-record:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+}
+
+.btn-record.recording {
+  animation: recordPulse 1s ease-in-out infinite;
+}
+
+@keyframes recordPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* ─── Track Lane ─────────────────────────────────────────────── */
+.track-lane {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.2s ease;
+}
+
+.track-lane:hover {
+  border-color: var(--border);
+}
+
+.track-lane.base-track { border-left: 3px solid var(--indigo); }
+.track-lane.normal-track { border-left: 3px solid var(--emerald); }
+.track-lane.top-track { border-left: 3px solid var(--amber); }
+
+/* ─── Upload Zone ────────────────────────────────────────────── */
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+/* ─── Toast ──────────────────────────────────────────────────── */
+@keyframes toastIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-20px); opacity: 0; }
+}
+
+.toast {
+  animation: toastIn 0.3s ease;
+}
+
+.toast.exiting {
+  animation: toastOut 0.3s ease forwards;
+}
+
+/* ─── Stars BG Decoration ────────────────────────────────────── */
+.stars-bg {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(201, 168, 76, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(67, 56, 202, 0.04) 0%, transparent 50%);
+}
+
+/* ─── Swara Column Header ────────────────────────────────────── */
+.column-header-base {
+  color: var(--indigo-light);
+  border-bottom: 2px solid var(--indigo);
+}
+
+.column-header-normal {
+  color: var(--emerald-light);
+  border-bottom: 2px solid var(--emerald);
+}
+
+.column-header-top {
+  color: var(--amber-light);
+  border-bottom: 2px solid var(--amber);
+}
+
+/* ─── Decorative Ornament ────────────────────────────────────── */
+.ornament {
+  color: var(--gold);
+  opacity: 0.5;
+  font-family: 'Cinzel', serif;
+}
+
+/* ─── Volume Knob ────────────────────────────────────────────── */
+.volume-knob-track {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--emerald) 0%, var(--emerald) var(--value, 70%), var(--bg-elevated) var(--value, 70%));
+  border-radius: 2px;
+}
