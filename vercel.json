@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/claude-api/(.*)",
+      "destination": "https://api.anthropic.com/$1"
+    },
+    {
+      "source": "/gemini-api/(.*)",
+      "destination": "https://generativelanguage.googleapis.com/$1"
+    }
+  ]
+}
