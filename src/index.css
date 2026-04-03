@@ -439,3 +439,15 @@ input[type="range"].trim-end::-webkit-slider-thumb {
   background: linear-gradient(to right, var(--emerald) 0%, var(--emerald) var(--value, 70%), var(--bg-elevated) var(--value, 70%));
   border-radius: 2px;
 }
+
+/* ─── Global App Loader ──────────────────────────────────────── */
+@keyframes loaderProgress {
+  0% { width: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+.animate-loader-progress {
+  animation: loaderProgress 2.8s ease-out forwards;
+}

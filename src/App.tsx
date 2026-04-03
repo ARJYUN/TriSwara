@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import TabNav, { TabId } from './components/shared/TabNav';
 import Toast, { ToastMessage, createToast } from './components/shared/Toast';
 import ApiKeyModal from './components/shared/ApiKeyModal';
@@ -24,6 +24,16 @@ const App: React.FC = () => {
   const [showKeyModal, setShowKeyModal] = useState(true);
   const [activeTab, setActiveTab] = useState<TabId>('converter');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  // Initial App Loading State
+  const [isAppLoading, setIsAppLoading] = useState(true);
+  const [isAppFadingOut, setIsAppFadingOut] = useState(false);
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => setIsAppFadingOut(true), 2500);
+    const removeTimer = setTimeout(() => setIsAppLoading(false), 3000);
+    return () => { clearTimeout(fadeTimer); clearTimeout(removeTimer); };
+  }, []);
 
   // Converter state
   const [imageData, setImageData] = useState<{ base64: string; mimeType: string } | null>(null);
@@ -105,7 +115,44 @@ const App: React.FC = () => {
 
   return (
     <>
-      {showKeyModal && (
+      {isAppLoading && (
+        <div className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0f0f14] transition-opacity duration-700 ${isAppFadingOut ? 'opacity-0' : 'opacity-100'}`}>
+          <div className="relative flex flex-col items-center">
+            {/* Logo container with radial glow and pulse */}
+            <div className="w-40 h-40 mb-8 relative animate-pulse" style={{ animationDuration: '2s' }}>
+               <div className="absolute inset-0 rounded-full blur-[50px] opacity-40" style={{ background: '#c9a84c' }}></div>
+               <img 
+                 src="/logo.png" 
+                 alt="TriSwara Logo" 
+                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_20px_rgba(201,168,76,0.7)]" 
+                 onError={(e) => {
+                   e.currentTarget.style.display = 'none';
+                   const fallback = document.createElement('div');
+                   fallback.className = 'w-full h-full flex items-center justify-center text-6xl font-bold';
+                   fallback.style.color = '#c9a84c';
+                   fallback.style.fontFamily = 'Cinzel, serif';
+                   fallback.innerHTML = 'TS';
+                   e.currentTarget.parentElement?.appendChild(fallback);
+                 }}
+               />
+            </div>
+            
+            <h1 className="text-4xl font-bold tracking-[0.2em] mb-4 text-[#c9a84c]" style={{ fontFamily: 'Cinzel, serif' }}>
+              Tri<span className="text-gray-300">Swara</span>
+            </h1>
+            
+            <div className="w-64 h-1 rounded-full overflow-hidden relative" style={{ background: 'rgba(255,255,255,0.05)' }}>
+               <div className="absolute top-0 left-0 h-full animate-loader-progress" style={{ background: '#c9a84c' }}></div>
+            </div>
+            
+            <p className="mt-8 text-xs tracking-[0.3em] uppercase opacity-50 animate-pulse text-gray-400">
+              Initializing Studio Environment
+            </p>
+          </div>
+        </div>
+      )}
+
+      {!isAppLoading && showKeyModal && (
         <ApiKeyModal 
           onSave={handleSaveApiKey} 
           initialKey={currentApiKey}
@@ -283,14 +330,14 @@ const App: React.FC = () => {
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase mt-1">
             <span style={{ color: 'var(--text-secondary)' }}>Created by</span>
             <a 
-              href="https://github.com/ARJYUN" 
+              href="https://arjunk.vercel.app" 
               target="_blank" 
               rel="noreferrer" 
               className="text-white hover:opacity-100 transition-opacity flex items-center gap-1.5"
               style={{ color: 'var(--gold)', textShadow: '0 0 8px rgba(201,168,76,0.3)' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 10 0 0 12 2z"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
               Arjun
             </a>
