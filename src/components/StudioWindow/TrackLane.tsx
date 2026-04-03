@@ -139,18 +139,18 @@ const TrackLane: React.FC<TrackLaneProps> = ({
       className={`track-lane ${id}-track flex flex-col gap-4`}
     >
       {/* Track Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div
-            className="w-3 h-10 rounded-full"
+            className="w-2 md:w-3 h-8 md:h-10 rounded-full"
             style={{ background: color, boxShadow: `0 0 10px ${color}80` }}
           />
           <div>
-            <h3 className="font-bold text-sm tracking-widest uppercase"
+            <h3 className="font-bold text-xs md:text-sm tracking-widest uppercase"
               style={{ fontFamily: 'Cinzel, serif', color }}>
               {label}
             </h3>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-[10px] md:text-xs" style={{ color: 'var(--text-muted)' }}>
               {state.buffer
                 ? `${trimDuration}s / ${totalDuration}s total`
                 : 'No recording'}
@@ -159,30 +159,30 @@ const TrackLane: React.FC<TrackLaneProps> = ({
         </div>
 
         {/* Record / Stop Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center flex-wrap gap-2">
           {!isRecording ? (
             <button
               id={`record-${id}`}
               onClick={startRecording}
-              className="btn-record flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg"
+              className="btn-record flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-semibold rounded-lg"
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
+              <span className="w-2 w-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500 inline-block" />
               Record
             </button>
           ) : (
             <button
               id={`stop-record-${id}`}
               onClick={stopRecording}
-              className="btn-record recording flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg"
+              className="btn-record recording flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-semibold rounded-lg"
             >
-              <span className="w-2.5 h-2.5 rounded bg-red-500 inline-block" />
+              <span className="w-2 md:w-2.5 h-2 md:h-2.5 rounded bg-red-500 inline-block" />
               Stop
             </button>
           )}
 
-          {/* Native Audio Fallback (Testing) */}
+          {/* Native Audio Fallback (Testing) - Hide on mobile if too crowded */}
           {state.blobUrl && (
-            <audio src={state.blobUrl} controls className="h-8 w-32 ml-2" />
+            <audio src={state.blobUrl} controls className="h-6 md:h-8 w-24 md:w-32" />
           )}
 
           {/* WebAudio Preview */}
@@ -191,7 +191,7 @@ const TrackLane: React.FC<TrackLaneProps> = ({
               id={`preview-${id}`}
               onClick={playPreview}
               disabled={!state.buffer}
-              className="btn-outline flex items-center gap-1.5 px-3 py-2 text-xs rounded-lg disabled:opacity-30"
+              className="btn-outline flex items-center gap-1 px-2.5 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs rounded-lg disabled:opacity-30"
             >
               ▶ Preview
             </button>
@@ -199,7 +199,7 @@ const TrackLane: React.FC<TrackLaneProps> = ({
             <button
               id={`stop-preview-${id}`}
               onClick={stopPreview}
-              className="btn-outline flex items-center gap-1.5 px-3 py-2 text-xs rounded-lg"
+              className="btn-outline flex items-center gap-1 px-2.5 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs rounded-lg"
               style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}
             >
               ⏹ Stop
@@ -217,7 +217,7 @@ const TrackLane: React.FC<TrackLaneProps> = ({
       />
 
       {/* Trim & Volume Controls */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 gap-6">
         {/* Trim Sliders */}
         <div className="flex flex-col gap-2">
           <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>

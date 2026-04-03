@@ -119,7 +119,7 @@ const App: React.FC = () => {
         <div className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0f0f14] transition-opacity duration-700 ${isAppFadingOut ? 'opacity-0' : 'opacity-100'}`}>
           <div className="relative flex flex-col items-center">
             {/* Logo container with radial glow and pulse */}
-            <div className="w-40 h-40 mb-8 relative animate-pulse" style={{ animationDuration: '2s' }}>
+            <div className="w-32 h-32 md:w-40 md:h-40 mb-8 relative animate-pulse" style={{ animationDuration: '2s' }}>
                <div className="absolute inset-0 rounded-full blur-[50px] opacity-40" style={{ background: '#c9a84c' }}></div>
                <img 
                  src="/logo.png" 
@@ -128,7 +128,7 @@ const App: React.FC = () => {
                  onError={(e) => {
                    e.currentTarget.style.display = 'none';
                    const fallback = document.createElement('div');
-                   fallback.className = 'w-full h-full flex items-center justify-center text-6xl font-bold';
+                   fallback.className = 'w-full h-full flex items-center justify-center text-5xl md:text-6xl font-bold';
                    fallback.style.color = '#c9a84c';
                    fallback.style.fontFamily = 'Cinzel, serif';
                    fallback.innerHTML = 'TS';
@@ -137,11 +137,11 @@ const App: React.FC = () => {
                />
             </div>
             
-            <h1 className="text-4xl font-bold tracking-[0.2em] mb-4 text-[#c9a84c]" style={{ fontFamily: 'Cinzel, serif' }}>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-[0.2em] mb-4 text-[#c9a84c]" style={{ fontFamily: 'Cinzel, serif' }}>
               Tri<span className="text-gray-300">Swara</span>
             </h1>
             
-            <div className="w-64 h-1 rounded-full overflow-hidden relative" style={{ background: 'rgba(255,255,255,0.05)' }}>
+            <div className="w-48 md:w-64 h-1 rounded-full overflow-hidden relative" style={{ background: 'rgba(255,255,255,0.05)' }}>
                <div className="absolute top-0 left-0 h-full animate-loader-progress" style={{ background: '#c9a84c' }}></div>
             </div>
             
@@ -161,29 +161,28 @@ const App: React.FC = () => {
 
       <div className="min-h-screen stars-bg flex flex-col" style={{ background: 'var(--bg-deep)' }}>
         <header className="border-b" style={{ borderColor: 'var(--border-subtle)' }}>
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 flex items-center justify-center shrink-0">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center shrink-0">
                 <img 
                   src="/logo.png" 
                   alt="TriSwara Logo" 
                   className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(201,168,76,0.5)]"
                   onError={(e) => {
-                    // Fallback to text if the user hasn't saved the image to public/ yet
                     e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = '<span class="text-3xl font-bold" style="color:var(--gold);font-family:\'Cinzel\',serif;">T<span class="text-2xl">S</span></span>';
+                    e.currentTarget.parentElement!.innerHTML = '<span class="text-2xl md:text-3xl font-bold" style="color:var(--gold);font-family:\'Cinzel\',serif;">T<span class="text-xl md:text-2xl">S</span></span>';
                   }}
                 />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-baseline gap-2">
-                  <h1 className="text-xl font-bold tracking-wider leading-none gold-text-glow"
+                  <h1 className="text-lg md:text-xl font-bold tracking-wider leading-none gold-text-glow"
                     style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)' }}>
                     Tri<span className="text-gray-300">Swara</span>
                   </h1>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
+                  <span className="text-[10px] md:text-xs font-medium tracking-widest uppercase whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
                     Read • Map • Record • Harmonize
                   </span>
                 </div>
@@ -194,7 +193,7 @@ const App: React.FC = () => {
 
             <button
               onClick={() => setShowKeyModal(true)}
-              className="btn-outline flex items-center gap-2 px-3 py-2 text-xs rounded-lg"
+              className="btn-outline flex items-center gap-2 px-3 py-2 text-xs rounded-lg order-first md:order-last self-end md:self-auto mb-[-48px] md:mb-0"
               style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
             >
               Gemini ✦ Key
@@ -202,7 +201,7 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-6 py-6 md:py-8">
           {activeTab === 'converter' && (
             <div className="tab-content flex flex-col gap-8">
               <div className="text-center">
@@ -215,26 +214,26 @@ const App: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex items-center justify-center gap-6 py-3 px-6 rounded-xl"
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 py-3 px-4 md:px-6 rounded-xl"
                 style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
                 {[
-                  { label: 'Base Octave', example: '.S  .R  .G', color: 'var(--indigo-light, #6366f1)', desc: 'dot before' },
-                  { label: 'Normal Octave', example: 'S  R  G', color: 'var(--emerald-light, #10b981)', desc: 'plain' },
-                  { label: 'Top Octave', example: 'S.  R.  G.', color: 'var(--amber-light, #f59e0b)', desc: 'dot after' },
+                  { label: 'Base Octave', example: '.S', color: 'var(--indigo-light, #6366f1)', desc: 'dot before' },
+                  { label: 'Normal Octave', example: 'S', color: 'var(--emerald-light, #10b981)', desc: 'plain' },
+                  { label: 'Top Octave', example: 'S.', color: 'var(--amber-light, #f59e0b)', desc: 'dot after' },
                 ].map(({ label, example, color, desc }) => (
                   <div key={label} className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full" style={{ background: color }} />
-                    <div>
-                      <span className="text-xs font-semibold" style={{ color }}>{label}</span>
-                      <span className="text-xs ml-1.5 font-mono" style={{ color: 'var(--text-muted)' }}>({desc}: {example})</span>
+                    <div className="flex flex-col md:flex-row md:items-baseline">
+                      <span className="text-[10px] md:text-xs font-semibold" style={{ color }}>{label}</span>
+                      <span className="text-[10px] md:ml-1.5 font-mono" style={{ color: 'var(--text-muted)' }}>({example})</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="grid grid-cols-5 gap-6">
-                <div className="col-span-2 flex flex-col gap-4">
-                  <div className="glass-card p-5">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div className="md:col-span-2 flex flex-col gap-4">
+                  <div className="glass-card p-4 md:p-5">
                     <h3 className="text-sm font-bold mb-4 uppercase tracking-wider"
                       style={{ fontFamily: 'Cinzel, serif', color: 'var(--text-secondary)' }}>
                       Upload Sheet
@@ -242,7 +241,7 @@ const App: React.FC = () => {
                     <ImageUploader onImageReady={handleImageReady} />
                   </div>
 
-                  <div className="glass-card p-5 flex flex-col items-center gap-4">
+                  <div className="glass-card p-4 md:p-5 flex flex-col items-center gap-4">
                     <ConvertButton
                       base64Image={imageData?.base64 ?? null}
                       mimeType={imageData?.mimeType ?? null}
@@ -270,7 +269,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="col-span-3 grid grid-cols-3 gap-4 min-h-96">
+                <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4 min-h-96">
                   <SwaraColumn label="Base" type="base" rows={harmonicResult?.base ?? []} />
                   <SwaraColumn label="Normal" type="normal" rows={harmonicResult?.normal ?? []} />
                   <SwaraColumn label="Top" type="top" rows={harmonicResult?.top ?? []} />

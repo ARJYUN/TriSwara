@@ -24,14 +24,14 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ onSave, initialKey = '' }) =>
       >
         {/* Logo and Title */}
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-20 h-20 flex items-center justify-center mb-2">
+          <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mb-2">
             <img 
               src="/logo.png" 
               alt="TriSwara Logo" 
               className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(201,168,76,0.5)]"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement!.innerHTML = '<span class="text-4xl font-bold" style="color:var(--gold);font-family:\'Cinzel\',serif;">T<span class="text-3xl">S</span></span>';
+                e.currentTarget.parentElement!.innerHTML = '<span class="text-3xl md:text-4xl font-bold" style="color:var(--gold);font-family:\'Cinzel\',serif;">T<span class="text-2xl md:text-3xl">S</span></span>';
               }}
             />
           </div>

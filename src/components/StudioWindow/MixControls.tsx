@@ -81,84 +81,88 @@ const MixControls: React.FC<MixControlsProps> = ({
     >
       <div className="flex items-center gap-2">
         <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
+          className="w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center text-xs md:text-sm"
           style={{ background: 'var(--gold-glow)', border: '1px solid var(--border)' }}
         >
           🎚️
         </div>
         <h3
-          className="text-sm font-bold tracking-widest uppercase"
+          className="text-xs md:text-sm font-bold tracking-widest uppercase"
           style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)' }}
         >
           Mix Console
         </h3>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-4">
         {/* Play All / Stop All */}
-        <div className="flex items-center gap-2">
-          {!playing ? (
-            <button
-              id="play-all-btn"
-              onClick={playAll}
-              className="btn-gold px-6 py-3 flex items-center gap-2 text-sm"
-            >
-              ▶ Play All
-            </button>
-          ) : (
-            <button
-              id="stop-all-btn"
-              onClick={stopAll}
-              className="btn-gold px-6 py-3 flex items-center gap-2 text-sm"
-              style={{ background: 'linear-gradient(135deg, #ef4444, #dc2626)' }}
-            >
-              ⏹ Stop All
-            </button>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            {!playing ? (
+              <button
+                id="play-all-btn"
+                onClick={playAll}
+                className="btn-gold px-4 md:px-6 py-2.5 md:py-3 flex items-center gap-2 text-xs md:text-sm whitespace-nowrap"
+              >
+                ▶ Play All
+              </button>
+            ) : (
+              <button
+                id="stop-all-btn"
+                onClick={stopAll}
+                className="btn-gold px-4 md:px-6 py-2.5 md:py-3 flex items-center gap-2 text-xs md:text-sm whitespace-nowrap"
+                style={{ background: 'linear-gradient(135deg, #ef4444, #dc2626)' }}
+              >
+                ⏹ Stop All
+              </button>
+            )}
+          </div>
+
+          {/* Playing indicator */}
+          {playing && (
+            <div className="flex items-center gap-2">
+              {[0, 1, 2, 3, 4].map(i => (
+                <div
+                  key={i}
+                  className="rounded-full"
+                  style={{
+                    width: '3px md:4px',
+                    background: 'var(--gold)',
+                    animation: `equalizerBar 0.8s ease-in-out ${i * 0.1}s infinite alternate`,
+                    height: `${6 + i * 3}px md:${8 + i * 4}px`,
+                  }}
+                />
+              ))}
+              <span className="text-[10px] md:text-xs ml-1" style={{ color: 'var(--gold)' }}>Playing...</span>
+            </div>
           )}
         </div>
 
-        {/* Playing indicator */}
-        {playing && (
-          <div className="flex items-center gap-2">
-            {[0, 1, 2, 3, 4].map(i => (
-              <div
-                key={i}
-                className="rounded-full"
-                style={{
-                  width: '4px',
-                  background: 'var(--gold)',
-                  animation: `equalizerBar 0.8s ease-in-out ${i * 0.1}s infinite alternate`,
-                  height: `${8 + i * 4}px`,
-                }}
-              />
-            ))}
-            <span className="text-xs ml-1" style={{ color: 'var(--gold)' }}>Playing...</span>
-          </div>
-        )}
-
-        {/* Spacer */}
-        <div className="flex-1" />
+        {/* Spacer - only on desktop */}
+        <div className="hidden md:block flex-1" />
 
         {/* Master Volume */}
-        <div className="flex items-center gap-3">
-          <label className="text-xs font-semibold uppercase tracking-wider shrink-0"
+        <div className="flex items-center justify-between md:justify-start gap-3 bg-white/5 md:bg-transparent p-3 md:p-0 rounded-xl md:rounded-none">
+          <label className="text-[10px] md:text-xs font-semibold uppercase tracking-wider shrink-0"
             style={{ color: 'var(--text-muted)' }}>
             Master
           </label>
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>🔇</span>
-          <input
-            id="master-volume"
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={masterVolume}
-            onChange={e => onMasterVolumeChange(parseFloat(e.target.value))}
-            className="w-32"
-            style={{ accentColor: 'var(--gold)' }}
-          />
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>🔊</span>
-          <span className="text-xs font-bold font-mono w-10"
+          <div className="flex items-center gap-2 flex-1 md:flex-none">
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>🔇</span>
+            <input
+              id="master-volume"
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              value={masterVolume}
+              onChange={e => onMasterVolumeChange(parseFloat(e.target.value))}
+              className="w-full md:w-32"
+              style={{ accentColor: 'var(--gold)' }}
+            />
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>🔊</span>
+          </div>
+          <span className="text-xs font-bold font-mono w-8 md:w-10 text-right"
             style={{ color: 'var(--gold)' }}>
             {Math.round(masterVolume * 100)}%
           </span>
@@ -169,7 +173,7 @@ const MixControls: React.FC<MixControlsProps> = ({
           id="export-btn"
           onClick={handleExport}
           disabled={exporting || !hasAnyRecording}
-          className="btn-outline flex items-center gap-2 px-5 py-3 text-sm rounded-lg disabled:opacity-30"
+          className="btn-outline flex items-center justify-center gap-2 px-5 py-2.5 md:py-3 text-xs md:text-sm rounded-lg disabled:opacity-30 w-full md:w-auto"
           style={!exporting && hasAnyRecording ? { borderColor: 'var(--gold)', color: 'var(--gold)' } : {}}
         >
           {exporting ? (

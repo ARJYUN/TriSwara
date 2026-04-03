@@ -58,6 +58,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 
 #root {
@@ -103,14 +104,22 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Source Code Pro', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: var(--radius-sm);
-  margin: 3px;
+  margin: 2px;
   cursor: default;
   letter-spacing: 0.05em;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (min-width: 768px) {
+  .swara-chip {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    margin: 3px;
+  }
 }
 
 .swara-chip:hover {
@@ -354,8 +363,14 @@ input[type="range"].trim-end::-webkit-slider-thumb {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 16px;
   transition: border-color 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .track-lane {
+    padding: 20px;
+  }
 }
 
 .track-lane:hover {
